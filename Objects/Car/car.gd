@@ -3,6 +3,7 @@ extends CharacterBody2D
 const DRIFT_TRANSITION_TIME_S = 0.6
 const DEAD_VELOCITY = 50
 const STEER_COYOTE_TIME = 0.25
+const ENGINE_BOOST_DECAY = 5
 
 @onready var car_sprite: Sprite2D = $CarSprite
 @onready var car_shadow: Sprite2D = $CarSprite/CarShadow
@@ -14,7 +15,7 @@ const STEER_COYOTE_TIME = 0.25
 @export var steering_angle = 15.0
 @export var base_steering_angle = 15.0
 @export var drift_steering_angle = 40.0
-@export var engine_power = 1160
+@export var base_engine_power = 1160
 @export var friction = -55
 @export var drift_friction = -75
 @export var drag = -0.06
@@ -24,20 +25,32 @@ const STEER_COYOTE_TIME = 0.25
 @export var traction_fast = 2.5
 @export var traction_slow = 10
 @export var drift_traction = 0.3
+@export var drift_level_boosts = {
+	Consts.DriftLevel.LEVEL_0 : 0,
+	Consts.DriftLevel.LEVEL_1 : 300,
+	Consts.DriftLevel.LEVEL_2 : 600,
+	Consts.DriftLevel.LEVEL_3 : 1160,
+}
 
-var heading
-var acceleration = Vector2.ZERO
-var steer_direction
+var heading: Vector2
+var acceleration : Vector2 = Vector2.ZERO
+var engine_boost : float = 0.0
+var steer_direction: float
 var drift_tween: Tween = null
 var drift_state: Consts.DriftState = Consts.DriftState.NEUTRAL
 var steer_coyote_timer = 0.0
 var steering_active = false
+var engine_power
 
+
+func _ready() -> void:
+	drift_handler.drift_boost.connect(_handle_drift_boost)
 
 func _physics_process(delta):
 	acceleration = Vector2.ZERO
 	get_input(delta)
 	apply_friction(delta)
+	apply_boost(delta)
 	calculate_steering(delta)
 	velocity += acceleration * delta
 	car_sprite.global_position = global_position
@@ -66,6 +79,7 @@ func get_input(delta):
 	else:
 		steer_coyote_timer = max(steer_coyote_timer - delta, 0.0)
 	steering_active = steer_coyote_timer
+
 	### DRIFT STATE MACHINE ###
 	var prev_drift_state = drift_state
 	if Input.is_action_pressed("drift") and steering_active:
@@ -104,3 +118,13 @@ func calculate_steering(delta):
 	elif Input.is_action_pressed("brake") and d < 0:
 		velocity = lerp(velocity, (-new_heading * min(velocity.length(), max_speed_reverse)), traction*delta)
 	rotation = new_heading.angle()
+
+func apply_boost(delta) -> void:
+	engine_power = base_engine_power + engine_boost
+	engine_boost = max(engine_boost-ENGINE_BOOST_DECAY, 0.0)
+	print(engine_power)
+
+func _handle_drift_boost(drift_level: Consts.DriftLevel) -> void:
+	engine_boost += drift_level_boosts[drift_level]
+	engine_power += engine_boost
+	#TODO while engine boost, emit car boost fumes particle 
