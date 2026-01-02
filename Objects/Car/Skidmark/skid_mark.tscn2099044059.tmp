@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://ds0osfujtyqrx"]
+
+[ext_resource type="Script" uid="uid://ck3rqc5s1q1ls" path="res://Objects/Car/Skidmark/skid_mark.gd" id="1_v3us7"]
+
+[sub_resource type="Curve" id="Curve_v3us7"]
+_data = [Vector2(0, 0.0048989058), 0.0, 0.0, 0, 0, Vector2(1, 1), -0.4503331, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_wces1"]
+offsets = PackedFloat32Array(0.02189781, 0.7007299, 1)
+colors = PackedColorArray(0.03529412, 0.03529412, 0.03529412, 0, 0, 0, 0, 1, 0.033853278, 0.033853278, 0.033853274, 1)
+
+[node name="SkidMark" type="Line2D"]
+width_curve = SubResource("Curve_v3us7")
+gradient = SubResource("Gradient_wces1")
+script = ExtResource("1_v3us7")

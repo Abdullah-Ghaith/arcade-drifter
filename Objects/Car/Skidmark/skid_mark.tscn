@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://ds0osfujtyqrx"]
+
+[ext_resource type="Script" uid="uid://ck3rqc5s1q1ls" path="res://Objects/Car/Skidmark/skid_mark.gd" id="1_v3us7"]
+
+[sub_resource type="Curve" id="Curve_v3us7"]
+_limits = [0.0, 0.87382597, 0.0, 1.0]
+_data = [Vector2(0, 0.0048989058), 0.0, 0.0, 0, 0, Vector2(0.99999994, 0.87382597), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_wces1"]
+offsets = PackedFloat32Array(0.02189781, 0.7007299, 1)
+colors = PackedColorArray(0.03529412, 0.03529412, 0.03529412, 0, 0, 0, 0, 1, 0.033853278, 0.033853278, 0.033853274, 1)
+
+[sub_resource type="Gradient" id="Gradient_v3us7"]
+offsets = PackedFloat32Array(0, 0.3826923, 0.74230766, 1)
+colors = PackedColorArray(0.80183154, 0.3119218, 0.32331726, 1, 0.017307693, 0.017307693, 0.017307693, 1, 0.18214644, 0.18214644, 0.18214644, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wces1"]
+gradient = SubResource("Gradient_v3us7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v3us7"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+gravity = Vector3(0, -98, 0)
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_wces1")
+
+[node name="SkidMark" type="Line2D"]
+width_curve = SubResource("Curve_v3us7")
+gradient = SubResource("Gradient_wces1")
+script = ExtResource("1_v3us7")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_v3us7")
