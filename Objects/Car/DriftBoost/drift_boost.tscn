@@ -1,18 +1,18 @@
 [gd_scene load_steps=7 format=3 uid="uid://c74aru0fk7vd4"]
 
-[ext_resource type="Texture2D" uid="uid://bm3gchh7u2onl" path="res://Assets/DriftSparks/RedDriftSpark-Sheet.png" id="1_520wf"]
-[ext_resource type="Script" uid="uid://dss70xrt8ak3f" path="res://Objects/Car/DriftSparks/DriftSpark.gd" id="2_8e60f"]
+[ext_resource type="Texture2D" uid="uid://bm3gchh7u2onl" path="res://Assets/DriftSparks/RedDriftSpark-Sheet.png" id="1_kmwjd"]
+[ext_resource type="Script" uid="uid://dss70xrt8ak3f" path="res://Objects/Car/DriftBoost/drift_boost.gd" id="2_hry3x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8e60f"]
-atlas = ExtResource("1_520wf")
+atlas = ExtResource("1_kmwjd")
 region = Rect2(0, 0, 9, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hrxad"]
-atlas = ExtResource("1_520wf")
+atlas = ExtResource("1_kmwjd")
 region = Rect2(9, 0, 9, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a35af"]
-atlas = ExtResource("1_520wf")
+atlas = ExtResource("1_kmwjd")
 region = Rect2(18, 0, 9, 10)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8gai5"]
@@ -38,5 +38,5 @@ sprite_frames = SubResource("SpriteFrames_8gai5")
 autoplay = "default"
 frame_progress = 0.96747625
 offset = Vector2(-3, 0)
-script = ExtResource("2_8e60f")
+script = ExtResource("2_hry3x")
 metadata/_custom_type_script = "uid://dss70xrt8ak3f"

@@ -40,7 +40,7 @@ var drift_tween: Tween = null
 var drift_state: Consts.DriftState = Consts.DriftState.NEUTRAL
 var steer_coyote_timer = 0.0
 var steering_active = false
-var engine_power
+var engine_power = base_engine_power
 
 
 func _ready() -> void:
@@ -50,7 +50,8 @@ func _physics_process(delta):
 	acceleration = Vector2.ZERO
 	get_input(delta)
 	apply_friction(delta)
-	apply_boost(delta)
+	if is_boosting():
+		apply_boost(delta)
 	calculate_steering(delta)
 	velocity += acceleration * delta
 	car_sprite.global_position = global_position
@@ -122,7 +123,12 @@ func calculate_steering(delta):
 func apply_boost(delta) -> void:
 	engine_power = base_engine_power + engine_boost
 	engine_boost = max(engine_boost-ENGINE_BOOST_DECAY, 0.0)
-	print(engine_power)
+
+func is_boosting() -> bool:
+	var is_boosting : bool = engine_boost
+	if not is_boosting:
+		SignalBus.drift_boost_end.emit()
+	return engine_boost
 
 func _handle_drift_boost(drift_level: Consts.DriftLevel) -> void:
 	engine_boost += drift_level_boosts[drift_level]
