@@ -6,7 +6,14 @@ const MINIMUM_DRIFT_BUILD_VEL = 100.0
 @onready var left_wheel: Marker2D = $"../BackLeftWheel"
 @onready var right_wheel: Marker2D = $"../BackRightWheel"
 @onready var wheels : Array[Marker2D] = [left_wheel, right_wheel]
+@onready var back_left_bumper: Marker2D = %BackLeftBumper
+@onready var back_right_bumper: Marker2D = %BackRightBumper
+@onready var bumper_sides : Array[Marker2D] = [back_left_bumper, back_right_bumper]
+
+
 @onready var skid_mark_scene : PackedScene = preload("res://Objects/Car/Skidmark/skid_mark.tscn")
+@onready var drift_spark_scene : PackedScene = preload("res://Objects/Car/DriftSparks/red_drift_spark.tscn")
+
 @onready var player : CharacterBody2D = get_parent()
 
 var drift_state : Consts.DriftState = Consts.DriftState.NEUTRAL
@@ -52,13 +59,15 @@ func determine_drift_level(drift_time: float) -> Consts.DriftLevel:
 func _handle_drift_state_changed(new_drift_state: Consts.DriftState) -> void:
 	if drift_state == Consts.DriftState.NEUTRAL and new_drift_state == Consts.DriftState.DRIFTING:
 		### Spawn in skid marks ###
+		for bumper_side in bumper_sides:
+			var drift_spark = drift_spark_scene.instantiate()
+			bumper_side.add_child(drift_spark)
 		for wheel in wheels:
 			var wheel_skid = skid_mark_scene.instantiate()
 			wheel.add_child(wheel_skid)
+
 	elif drift_state == Consts.DriftState.DRIFTING and new_drift_state == Consts.DriftState.NEUTRAL:
 		### Handle Drift Boost ###
-		print(curr_drift_time)
-		print(curr_drift_level)
 		drift_boost.emit(curr_drift_level)
 		curr_drift_time = 0.0
 
