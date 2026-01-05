@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://4umdycal5hw4" path="res://Objects/Car/drift_handler.gd" id="6_m633q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7822p"]
-size = Vector2(16.333334, 12)
+size = Vector2(11, 12)
 
 [sub_resource type="Animation" id="Animation_v0hk8"]
 resource_name = "E"
@@ -166,30 +166,6 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(-2, 4)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CarSprite/BackRightBumper:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-7, 15)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CarSprite/BackLeftBumper:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-20.000002, 5)]
-}
 
 [sub_resource type="Animation" id="Animation_pc2p3"]
 resource_name = "NEE"
@@ -316,7 +292,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-13, 11.000001)]
+"values": [Vector2(-16, 12.666668)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -328,7 +304,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 16)]
+"values": [Vector2(0, 18)]
 }
 
 [sub_resource type="Animation" id="Animation_tssvf"]
@@ -392,7 +368,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(10.000001, 12)]
+"values": [Vector2(12.666666, 12.666666)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -404,7 +380,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 14)]
+"values": [Vector2(-1.3333334, 16.666666)]
 }
 
 [sub_resource type="Animation" id="Animation_uhg3g"]
@@ -1302,22 +1278,23 @@ blend_point_15/pos = Vector2(1, -0.6)
 blend_mode = 1
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(3, 3)
+position = Vector2(-20, -14)
+scale = Vector2(1.5, 1.5)
 script = ExtResource("1_tvrm5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.8333334, -1)
+position = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_7822p")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="BackLeftWheel" type="Marker2D" parent="."]
 z_index = -2
-position = Vector2(-6, -1.6666666)
+position = Vector2(-5.3333335, 1.1920929e-07)
 
 [node name="BackRightWheel" type="Marker2D" parent="."]
 z_index = -2
-position = Vector2(-5.6666665, 3.6666667)
+position = Vector2(-4.6666665, 12.666666)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1340,6 +1317,7 @@ script = ExtResource("6_m633q")
 
 [node name="CarSprite" type="Sprite2D" parent="."]
 top_level = true
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_nu55j")
 hframes = 48
 frame = 23

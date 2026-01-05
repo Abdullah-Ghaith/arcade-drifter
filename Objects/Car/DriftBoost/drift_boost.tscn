@@ -33,10 +33,11 @@ animations = [{
 }]
 
 [node name="DriftSpark" type="AnimatedSprite2D"]
-scale = Vector2(3, 2)
+position = Vector2(1, 0)
+scale = Vector2(2.5, 2)
 sprite_frames = SubResource("SpriteFrames_8gai5")
 autoplay = "default"
-frame_progress = 0.96747625
+frame_progress = 0.24665613
 offset = Vector2(-3, 0)
 script = ExtResource("2_hry3x")
 metadata/_custom_type_script = "uid://dss70xrt8ak3f"

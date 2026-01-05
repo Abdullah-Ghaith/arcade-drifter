@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name player_car extends CharacterBody2D
 
 const DRIFT_TRANSITION_TIME_S = 0.6
 const DEAD_VELOCITY = 50
@@ -11,11 +11,11 @@ const ENGINE_BOOST_DECAY = 5
 
 
 #TODO make all of these into a resource file
-@export var wheel_base = 30
+@export var wheel_base = 45
 @export var steering_angle = 15.0
 @export var base_steering_angle = 15.0
 @export var drift_steering_angle = 40.0
-@export var base_engine_power = 1160/3
+@export var base_engine_power = 1160
 @export var friction = -55
 @export var drift_friction = -75
 @export var drag = -0.06
@@ -27,9 +27,9 @@ const ENGINE_BOOST_DECAY = 5
 @export var drift_traction = 0.3
 @export var drift_level_boosts = {
 	Consts.DriftLevel.LEVEL_0 : 0,
-	Consts.DriftLevel.LEVEL_1 : 300,
-	Consts.DriftLevel.LEVEL_2 : 600,
-	Consts.DriftLevel.LEVEL_3 : 1160,
+	Consts.DriftLevel.LEVEL_1 : 250,
+	Consts.DriftLevel.LEVEL_2 : 550,
+	Consts.DriftLevel.LEVEL_3 : 800,
 }
 
 var heading: Vector2
@@ -129,6 +129,12 @@ func is_boosting() -> bool:
 	if not is_boosting:
 		SignalBus.drift_boost_end.emit()
 	return engine_boost
+
+func get_drift_level_boosts() -> Array[float]:
+	var drift_boosts : Array[float]
+	for drift_boost_amount in drift_level_boosts.values():
+		drift_boosts.append(drift_boost_amount)
+	return drift_boosts
 
 func _handle_drift_boost(drift_level: Consts.DriftLevel) -> void:
 	engine_boost += drift_level_boosts[drift_level]
